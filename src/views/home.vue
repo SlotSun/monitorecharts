@@ -1,7 +1,7 @@
 <template>
   <div class="home">
 
-    <div class="pagedata">电子设备数据监控报表</div>
+    <div class="pagedata">风机数据监控表</div>
     <div class="content">
       <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
       <div id="main1" style="width: 600px;height:400px;"></div>
@@ -38,7 +38,7 @@ let option = {
     trigger: 'axis'
   },
   legend: {
-    data: ['设备1', '设备2'],
+    data: ['风机1', '风机2'],
     selectedMode: 'single'
   },
   grid: {
@@ -58,13 +58,13 @@ let option = {
   },
   series: [
     {
-      name: '设备1',
+      name: '风机1',
       type: 'line',
       stack: 'Total',
       data: [120, 132, 101, 134, 90, 230, 210]
     },
     {
-      name: '设备2',
+      name: '风机2',
       type: 'line',
       stack: 'Total',
       data: [220, 182, 191, 234, 290, 330, 310]
