@@ -139,7 +139,7 @@ onMounted(()=>{
   initecharts( )
   getdata(route.query.id)
   setInterval(()=>{
-    getdata()
+    getdata(route.query.id)
   },5000)
 })
     
