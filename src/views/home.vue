@@ -71,7 +71,7 @@ let option = {
     }
   ]
 };
-    let initecharts = (datalist,data2list)=>{
+    let initecharts = ()=>{
         myChart1 = echarts.init(document.getElementById('main1'));
         myChart2 = echarts.init(document.getElementById('main2'));
         myChart3 = echarts.init(document.getElementById('main3'));
@@ -79,7 +79,10 @@ let option = {
         myChart5 = echarts.init(document.getElementById('main5'));
         myChart6 = echarts.init(document.getElementById('main6'));
 
-        let devicedatalist = []
+    }
+    const setdata = (datalist,data2list) =>{
+
+      let devicedatalist = []
         for(let i=0;i<6;i++){
           devicedatalist.push({
             name:"a1",
@@ -90,32 +93,32 @@ let option = {
         }
         datalist.map((list)=>{
           let time = dayjs(list.datetime).format('hh:mm:ss')
-          devicedatalist[0].name = 'ID'
+          devicedatalist[0].name = 'T1'
           devicedatalist[0].xdata.push(time)
-          devicedatalist[0].ydata.push(list.ID)
-          devicedatalist[1].name = 'Z1'
+          devicedatalist[0].ydata.push(list.T1)
+          devicedatalist[1].name = 'T2'
           devicedatalist[1].xdata.push(time)
-          devicedatalist[1].ydata.push(list.Z1)
-          devicedatalist[2].name = 'Z2'
+          devicedatalist[1].ydata.push(list.T2)
+          devicedatalist[2].name = 'Z1'
           devicedatalist[2].xdata.push(time)
-          devicedatalist[2].ydata.push(list.Z2)
-          devicedatalist[3].name = 'Z3'
+          devicedatalist[2].ydata.push(list.Z1)
+          devicedatalist[3].name = 'Z2'
           devicedatalist[3].xdata.push(time)
-          devicedatalist[3].ydata.push(list.Z3)
-          devicedatalist[4].name = 'Z4'
+          devicedatalist[3].ydata.push(list.Z2)
+          devicedatalist[4].name = 'Z3'
           devicedatalist[4].xdata.push(time)
-          devicedatalist[4].ydata.push(list.Z4)
-          devicedatalist[5].name = 'T2'
+          devicedatalist[4].ydata.push(list.Z3)
+          devicedatalist[5].name = 'Z4'
           devicedatalist[5].xdata.push(time)
-          devicedatalist[5].ydata.push(list.T2)
+          devicedatalist[5].ydata.push(list.Z4)
         })
         data2list.map((list)=>{
-          devicedatalist[0].ydata2.push(list.ID)
-          devicedatalist[1].ydata2.push(list.Z1)
-          devicedatalist[2].ydata2.push(list.Z2)
-          devicedatalist[3].ydata2.push(list.Z3)
-          devicedatalist[4].ydata2.push(list.Z4)
-          devicedatalist[5].ydata2.push(list.T2)
+          devicedatalist[0].ydata2.push(list.T1)
+          devicedatalist[1].ydata2.push(list.T2)
+          devicedatalist[2].ydata2.push(list.Z1)
+          devicedatalist[3].ydata2.push(list.Z2)
+          devicedatalist[4].ydata2.push(list.Z3)
+          devicedatalist[5].ydata2.push(list.Z4)
         })
         for(let i=0;i<6;i++){
           option.title.text = devicedatalist[i].name;
@@ -125,20 +128,24 @@ let option = {
           eval('myChart'+(i+1)).setOption(option);
 
         }
-          console.log(myChart1)
     }
-    onMounted(()=>{
-      
+    const getdata = () =>{
       get('/api/equipment/getEquipment?ID=1').then((info)=>{
         if(info.code==200){
           get('/api/equipment/getEquipment?ID=2').then((info2)=>{
             if(info.code==200){
-              initecharts(info.data, info2.data)
-                    
+              setdata(info.data, info2.data)
             }
           })
         }
       })
+    }
+    onMounted(()=>{
+      initecharts()
+      getdata()
+      setInterval(()=>{
+        getdata()
+      },5000)
     })
     
 </script>
@@ -153,7 +160,7 @@ let option = {
     font-size: 28px;
     font-weight: 600;
     color: #333;
-    margin: 20px auto 100px;
+    margin: 20px auto 60px;
   }
 
   .content {
@@ -164,6 +171,7 @@ let option = {
 
   .content div {
     width: 30%;
+    margin-bottom: 60px;
   }
 }
 </style>
