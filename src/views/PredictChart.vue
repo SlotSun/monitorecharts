@@ -1,8 +1,9 @@
 <template>
+  <div class="back" @click="router.back()">返回
+  </div>
   <div class="home">
-    <div class="back" @click="router.back()">返回
-    </div>
-    <div class="pagedata">风机{{id}}数据监控表</div>
+
+    <div class="pagedata" id="title">风机{{id}}数据预测表</div>
     <div class="content">
       <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
       <div id="main1" style="width: 600px;height:400px;"></div>
@@ -32,6 +33,8 @@ let myChart3 = {}
 let myChart4 = {}
 let myChart5 = {}
 let myChart6 = {}
+let title = document.getElementById('title')
+
 const id = route.query.id;
 
 // 指定图表的配置项和数据
@@ -70,6 +73,10 @@ let option = {
     }
   ]
 };
+
+
+
+
 let initecharts = ()=>{
   console.log('初始化了' ,echarts, document.getElementById('main1'))
   let main1 = document.getElementById('main1')
@@ -131,12 +138,15 @@ const setdata = (datalist,data2list) =>{
     }
 }
 const getdata = (id) =>{
-  get('/api/equipment/getEquipment?ID='+id).then((info)=>{
+  get('/api/equipment/getEquipmentPredict?ID='+id).then((info)=>{
     if(info.code==200){
       setdata(info.data, info.data)
     }
   })
 }
+
+
+
 onMounted(()=>{  
   initecharts( )
   getdata(route.query.id)

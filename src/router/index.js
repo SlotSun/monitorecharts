@@ -16,6 +16,11 @@ const routes = [
     name: "chart",
     component: import("@/views/Chart.vue")
   },
+  {
+    path: "/predictChart",
+    name: "predictChart",
+    component: import("@/views/PredictChart.vue")
+  },
 ];
 
 const router = createRouter({

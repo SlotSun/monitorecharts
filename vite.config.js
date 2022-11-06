@@ -16,7 +16,8 @@ export default defineConfig({
     proxy: {
       // 选项写法
       '/api': {
-        target: "http://47.97.96.59:8081",
+        // target: "http://47.97.96.59:8081",
+        target:"http://localhost:8081",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
